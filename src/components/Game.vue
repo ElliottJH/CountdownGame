@@ -1,6 +1,6 @@
 <template>
     <section class="game">
-        <Clock v-bind:milliseconds="milliseconds" v-bind:seconds="seconds" />
+        <Clock v-bind:milliseconds="milliseconds" v-bind:seconds="seconds" v-bind:startClock="startClock"/>
     </section>
 </template>
 
@@ -10,6 +10,7 @@ import Clock from './Clock.vue'
 export default {
     name: 'Game',
     data: () => ({
+        startClock: false,
         seconds: 0,
         milliseconds: 0
     }),
@@ -17,10 +18,14 @@ export default {
         Clock
     }),
     mounted: function(){
+        document.getElementById('app').classList.add('running')
+        document.getElementById('app').classList.remove('stopped')
         let increaseTime = (start_time) => {
             setTimeout(() => {
                 if(this.seconds >= 30){
                     this.milliseconds = 0
+                document.getElementById('app').classList.remove('running')
+                document.getElementById('app').classList.add('stopped')
                     return
                 }
                 let elapsed_time = Date.now() - start_time

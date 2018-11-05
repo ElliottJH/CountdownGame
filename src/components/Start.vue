@@ -42,6 +42,7 @@ button {
 h2 {
   color: gray;
   margin-bottom:2em;
+  font-size: 1.3em
 }
 button:hover {
   box-shadow: 0 5px 20px rgba(0,0,0,.05), 0 5px 35px rgba(0,0,0,.05);

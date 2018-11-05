@@ -50,4 +50,10 @@ body, html{
   align-items: center;
   justify-content: center;
 }
+.running{
+    background-color:#44bd32
+}
+.stopped{
+    background-color:#EA2027
+}
 </style>

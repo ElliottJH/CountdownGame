@@ -1,6 +1,6 @@
 <template>
     <div class="clock">
-        <h1><span id="seconds">{{displaySeconds}}</span> : <span id="milliseconds">{{displayMilliseconds}}</span></h1>
+        <h1><span id="seconds">{{displaySeconds}}</span><span id="colon"> : </span><span id="milliseconds">{{displayMilliseconds}}</span></h1>
     </div>
 </template>
 
@@ -9,7 +9,8 @@
         name: 'Clock',
         props: {
             milliseconds: Number,
-            seconds: Number
+            seconds: Number,
+            clockStarted: Boolean
         },
         data: () => ({
             displaySeconds: '00',
@@ -17,25 +18,52 @@
         }),
         watch: { 
             milliseconds: function() {
-                this.displayMilliseconds = '' + this.milliseconds
-                if(this.displayMilliseconds.length == 2){
-                    this.displayMilliseconds = '0' + this.displayMilliseconds
-                }else if(this.displayMilliseconds.length == 1){
-                    this.displayMilliseconds = '00' + this.displayMilliseconds
-                }
+                this.displayMilliseconds = this.numToDisplayString(this.milliseconds, true)
             },
             seconds: function() {
-                this.displaySeconds = '' + this.seconds
-                if(this.displaySeconds.length == 1){
-                    this.displaySeconds = '0' + this.displaySeconds
-                }else if(this.displaySeconds.length == 0){
-                    this.displaySeconds = '00'
+                this.displaySeconds = this.numToDisplayString(this.seconds, false)
+            }
+        },
+        methods: {
+            numToDisplayString: function(time, milli){
+                time = time.toString()
+                let startString = ''
+                if(time.length == 2 && milli){
+                    startString = '0'
+                }else if(time.length == 1){
+                    startString += '0'
+                    if(milli)
+                        startString += '0'
+                }else if(time.length == 0){
+                    startString = '00'
                 }
+                return startString + time
             }
         }
     }
 </script>
 
-<style>
-
+<style scoped>
+.clock h1{
+    height: 20vh;
+    color: white;
+    font-size: 22vh;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 20.4vh;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+.black{
+    color:black!important
+}
+#colon{
+    font-size:15vh;
+    line-height:17vh;
+    padding:0 0.2em;
+}
 </style>
