@@ -1,11 +1,13 @@
 <template>
     <section class="game">
         <Clock v-bind:milliseconds="milliseconds" v-bind:seconds="seconds" v-bind:startClock="startClock"/>
+        <Letters />
     </section>
 </template>
 
 <script>
 import Clock from './Clock.vue'
+import Letters from './Letters.vue'
 
 export default {
     name: 'Game',
@@ -15,7 +17,8 @@ export default {
         milliseconds: 0
     }),
     components: ({
-        Clock
+        Clock,
+        Letters
     }),
     mounted: function(){
         document.getElementById('app').classList.add('running')

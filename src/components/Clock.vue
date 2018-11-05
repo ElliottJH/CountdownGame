@@ -53,10 +53,6 @@
     display: flex;
     position: relative;
     overflow: hidden;
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
 }
 .black{
     color:black!important
