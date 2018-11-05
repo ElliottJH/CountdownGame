@@ -11,7 +11,7 @@
             <input type="text" name="8" maxlength="1" disabled/>
         </div>
         <div>
-            <button v-on:click="addConst">Continents</button>
+            <button v-on:click="addConst">Continent</button>
             <button v-on:click="addVowel">Vowel</button>
         </div>
     </div>
