@@ -1,18 +1,14 @@
 <template>
     <div id="letters">
         <div>
-            <input type="text" name="1" maxlength="1" disabled/>
-            <input type="text" name="2" maxlength="1" disabled/>
-            <input type="text" name="3" maxlength="1" disabled/>
-            <input type="text" name="4" maxlength="1" disabled/>
-            <input type="text" name="5" maxlength="1" disabled/>
-            <input type="text" name="6" maxlength="1" disabled/>
-            <input type="text" name="7" maxlength="1" disabled/>
-            <input type="text" name="8" maxlength="1" disabled/>
+            <input type="text" v-for="n in 8" maxlength="1" disabled v-model="usedLetters[n-1]" :key="n"/>
         </div>
         <div>
             <button v-on:click="addConst">Continent</button>
             <button v-on:click="addVowel">Vowel</button>
+        </div>
+        <div>
+            <input v-if="clockRunning" maxlength="8" />
         </div>
     </div>
 </template>
@@ -20,8 +16,13 @@
 <script>
 export default {
     name: 'Letters',
+    props: {
+        setClockRunning: Function,
+        setAnswer: Function,
+        clockRunning: Boolean
+    },
     data: () => ({
-        used_letters: ['','','','','','','','']
+        usedLetters: []
     }),
     methods: {
         addConst: function(event) {
@@ -33,13 +34,10 @@ export default {
             this.addToLetters( vowels[Math.floor(Math.random() * vowels.length)] )
         },
         addToLetters: function(letter){
-            console.log(this.used_letters)
-            for(let i = 0; i < this.used_letters.length; i++){
-                if(this.used_letters[i] === ''){
-                    this.used_letters[i] = letter
-                    document.getElementsByName(i+1)[0].value = letter
-                    return
-                }
+            this.usedLetters = this.usedLetters.concat(letter)
+
+            if(this.usedLetters.length === 8) {
+                this.setClockRunning(true)
             }
         }
     }
@@ -78,6 +76,11 @@ button {
 }
 button:hover{
     background-color: #dfe6e9;
+}
+
+#letters > div {
+    display: flex;
+    justify-content: center;
 }
 
 </style>

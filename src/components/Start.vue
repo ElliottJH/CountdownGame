@@ -1,5 +1,5 @@
 <template>
-    <section class="start">
+    <section>
         <h1>Countdown</h1>
         <h2>A game built in honor of the popular tv program Countdown</h2>
         <button @click="onStartClick">Start Countdown</button>
@@ -17,10 +17,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.start {
-  grid-row: 2;
-  grid-column: 2;
-}
+
 h1 {
   font-size: 3em;
   margin: .25em 0;

@@ -1,6 +1,6 @@
 <template>
     <div class="clock">
-        <h1><span id="seconds">{{displaySeconds}}</span><span id="colon"> : </span><span id="milliseconds">{{displayMilliseconds}}</span></h1>
+        <h1><span id="seconds">{{numToDisplayString(seconds, false)}}</span><span id="colon"> : </span><span id="milliseconds">{{numToDisplayString(milliseconds, true)}}</span></h1>
     </div>
 </template>
 
@@ -8,24 +8,17 @@
     export default {
         name: 'Clock',
         props: {
-            milliseconds: Number,
-            seconds: Number,
-            clockStarted: Boolean
+            clockRunning: Boolean,
+            setClockRunning: Function
         },
         data: () => ({
-            displaySeconds: '00',
-            displayMilliseconds: '00'
+            seconds: 30,
+            milliseconds: 0
         }),
-        watch: { 
-            milliseconds: function() {
-                this.displayMilliseconds = this.numToDisplayString(this.milliseconds, true)
-            },
-            seconds: function() {
-                this.displaySeconds = this.numToDisplayString(this.seconds, false)
-            }
-        },
         methods: {
             numToDisplayString: function(time, milli){
+                // REFACTOR THIS UGLYNESSSSSSSSSSSSSZSZSDAS11!!!111
+                // ^^^ rude
                 time = time.toString()
                 let startString = ''
                 if(time.length == 2 && milli){
@@ -38,6 +31,27 @@
                     startString = '00'
                 }
                 return startString + time
+            },
+            increaseTime: function(startTime) { 
+                setTimeout(() => {
+                    if(this.seconds <= 0 ){
+                        this.milliseconds = 0
+                        this.setClockRunning(false)
+                        return
+                    }
+
+                    let elapsedTime = new Date(Date.now() - startTime)
+                    this.seconds = 29 - elapsedTime.getSeconds()
+                    this.milliseconds = 1000 - elapsedTime.getMilliseconds()
+                    this.increaseTime(startTime)
+                }, 20)
+            }
+        },
+        watch: {
+            clockRunning: function(){
+                if (this.clockRunning) {
+                    this.increaseTime(new Date())
+                }
             }
         }
     }
