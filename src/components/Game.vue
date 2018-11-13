@@ -32,14 +32,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    #game {
+#game {
     background-color:#44bd32
-    }
-    h1 {
+}
+h1 {
     font-size: 3em;
     margin: .25em 0;
-    }
-    button {
+}
+button {
     border: none;
     border-radius: 25px;
     padding: 15px 50px;
@@ -52,16 +52,16 @@ export default {
     transition: box-shadow .3s ease-in-out;
     outline: none;
     margin-bottom:50px;
-    }
-    h2 {
+}
+h2 {
     color: gray;
     margin-bottom:2em;
-    }
-    button:hover {
+}
+button:hover {
     box-shadow: 0 5px 20px rgba(0,0,0,.05), 0 5px 35px rgba(0,0,0,.05);
-    }
-    
-    .stopped{
-        background-color:#EA2027!important;
-    }
+}
+
+.stopped{
+    background-color:#EA2027!important;
+}
 </style>
