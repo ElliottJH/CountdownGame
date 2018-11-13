@@ -1,6 +1,6 @@
 <template>
     <div class="clock">
-        <h1><span id="seconds">{{numToDisplayString(seconds, false)}}</span><span id="colon"> : </span><span id="milliseconds">{{numToDisplayString(milliseconds, true)}}</span></h1>
+        <h1><span id="seconds">{{numToDisplayString(seconds, 2)}}</span><span id="colon"> : </span><span id="milliseconds">{{numToDisplayString(milliseconds, 3)}}</span></h1>
     </div>
 </template>
 
@@ -16,21 +16,8 @@
             milliseconds: 0
         }),
         methods: {
-            numToDisplayString: function(time, milli){
-                // REFACTOR THIS UGLYNESSSSSSSSSSSSSZSZSDAS11!!!111
-                // ^^^ rude
-                time = time.toString()
-                let startString = ''
-                if(time.length == 2 && milli){
-                    startString = '0'
-                }else if(time.length == 1){
-                    startString += '0'
-                    if(milli)
-                        startString += '0'
-                }else if(time.length == 0){
-                    startString = '00'
-                }
-                return startString + time
+            numToDisplayString: function(time, length){
+                return "0000".substring((time + "").length, length) + time
             },
             increaseTime: function(startTime) { 
                 setTimeout(() => {
