@@ -34,10 +34,12 @@ export default {
             this.addToLetters( vowels[Math.floor(Math.random() * vowels.length)] )
         },
         addToLetters: function(letter){
-            this.usedLetters = this.usedLetters.concat(letter)
-
-            if(this.usedLetters.length === 8) {
+            const newLetters = this.usedLetters.concat(letter)
+            if(newLetters.length === 8) {
+                this.usedLetters = newLetters
                 this.setClockRunning(true)
+            }else if(newLetters.length < 8 ){
+                this.usedLetters = newLetters
             }
         }
     }
