@@ -1,14 +1,14 @@
 <template>
     <div id="letters">
         <div>
-            <input type="text" v-for="n in 8" maxlength="1" disabled v-model="usedLetters[n-1]" :key="n"/>
+            <input type="text" v-for="n in 8" maxlength="1" disabled v-model="letters[n-1]" :key="n"/>
         </div>
         <div>
             <button v-on:click="addConst">Continent</button>
             <button v-on:click="addVowel">Vowel</button>
         </div>
         <div>
-            <input v-if="clockRunning" maxlength="8" />
+            <input v-if="clockRunning" maxlength="8" id="wordAttempt" placeholder="enter your best answer" @keydown="keyDown" v-model="attempt"/>
         </div>
     </div>
 </template>
@@ -22,7 +22,8 @@ export default {
         clockRunning: Boolean
     },
     data: () => ({
-        usedLetters: []
+        letters: [],
+        attempt: ""
     }),
     methods: {
         addConst: function(event) {
@@ -34,13 +35,28 @@ export default {
             this.addToLetters( vowels[Math.floor(Math.random() * vowels.length)] )
         },
         addToLetters: function(letter){
-            const newLetters = this.usedLetters.concat(letter)
+            const newLetters = this.letters.concat(letter)
             if(newLetters.length === 8) {
-                this.usedLetters = newLetters
+                this.letters = newLetters
                 this.setClockRunning(true)
             }else if(newLetters.length < 8 ){
-                this.usedLetters = newLetters
+                this.letters = newLetters
             }
+        },
+        keyDown: function(event){
+            if(event.key.length !== 1)
+                return
+
+            let remainingLetters = this.letters.concat()
+                
+            for(let i = 0; i < remainingLetters.length; i++){
+                let char = this.attempt[i]
+                if(remainingLetters.includes(char))
+                    remainingLetters[remainingLetters.indexOf(char)] = undefined
+            }
+
+            if(!remainingLetters.includes(event.key))
+                event.preventDefault()
         }
     }
 }
@@ -59,6 +75,9 @@ input{
     border-radius: 5px;
     border:none;
     background-color:ghostwhite;
+}
+#wordAttempt{
+    width:100%;
 }
 button {
     border: none;
