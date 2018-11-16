@@ -83,6 +83,7 @@ export default {
                     this.lettersChosen[index] = true
                 }
             }
+            this.setAnswer(this.attempt)
         }
     }
 }
