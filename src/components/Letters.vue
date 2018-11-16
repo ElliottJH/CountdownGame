@@ -1,14 +1,29 @@
 <template>
     <div id="letters">
         <div>
-            <input type="text" v-for="n in 8" maxlength="1" disabled v-model="letters[n-1]" :key="n"/>
+            <input 
+                type="text" 
+                v-for="n in 8" 
+                maxlength="1" 
+                disabled 
+                v-model="letters[n-1]" 
+                :key="n"
+                v-bind:class="[lettersChosen[n-1] === true ? 'used' : '']"
+                />
         </div>
         <div>
-            <button v-on:click="addConst">Continent</button>
+            <button v-on:click="addConst">Consonant</button>
             <button v-on:click="addVowel">Vowel</button>
         </div>
         <div>
-            <input v-if="clockRunning" maxlength="8" id="wordAttempt" placeholder="enter your best answer" @keydown="keyDown" v-model="attempt"/>
+            <input 
+                v-if="clockRunning" 
+                maxlength="8" 
+                id="wordAttempt"
+                placeholder="enter your best answer" 
+                @keydown="keyDown"
+                v-model="attempt"
+                />
         </div>
     </div>
 </template>
@@ -22,6 +37,7 @@ export default {
         clockRunning: Boolean
     },
     data: () => ({
+        lettersChosen: [],
         letters: [],
         attempt: ""
     }),
@@ -47,16 +63,26 @@ export default {
             if(event.key.length !== 1)
                 return
 
+            if( this.acceptLetter(event.key) )
+                event.preventDefault();
+        },
+        acceptLetter: function(char){
+            return (this.attempt.match(new RegExp(char, 'g')) || []).length >= (this.letters.toString().match(new RegExp(char, 'g')) || []).length
+        }
+    },
+    watch: {
+        attempt: function(){
             let remainingLetters = this.letters.concat()
+            this.lettersChosen = []
                 
-            for(let i = 0; i < remainingLetters.length; i++){
+            for(let i = 0; i <= remainingLetters.length; i++){
                 let char = this.attempt[i]
-                if(remainingLetters.includes(char))
-                    remainingLetters[remainingLetters.indexOf(char)] = undefined
+                let index = remainingLetters.indexOf(char)
+                if(index > -1){
+                    remainingLetters[index] = undefined
+                    this.lettersChosen[index] = true
+                }
             }
-
-            if(!remainingLetters.includes(event.key))
-                event.preventDefault()
         }
     }
 }
@@ -75,6 +101,10 @@ input{
     border-radius: 5px;
     border:none;
     background-color:ghostwhite;
+}
+.used{
+    background-color: #2d3436;
+    color: white;
 }
 #wordAttempt{
     width:100%;
