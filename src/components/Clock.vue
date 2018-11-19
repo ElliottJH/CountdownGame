@@ -13,6 +13,7 @@ export default {
     name: 'Clock',
     props: {
         clockRunning: Boolean,
+        endGame: Function,
         setClockRunning: Function
     },
     data: () => ({
@@ -28,6 +29,7 @@ export default {
                 if(this.seconds <= 0 ){
                     this.milliseconds = 0
                     this.setClockRunning(false)
+                    this.endGame()
                     return
                 }
 

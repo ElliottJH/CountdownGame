@@ -34,6 +34,7 @@ export default {
     props: {
         setClockRunning: Function,
         setAnswer: Function,
+        setLetters: Function,
         clockRunning: Boolean
     },
     data: () => ({
@@ -42,11 +43,11 @@ export default {
         attempt: ""
     }),
     methods: {
-        addConst: function(event) {
+        addConst: function() {
             const consts = ['q','w','r','t','y','p','s','d','f','g','h', 'j', 'k', 'l', 'z', 'x', 'v', 'b', 'n', 'm']
             this.addToLetters( consts[Math.floor(Math.random() * consts.length)] )  
         },
-        addVowel: function(event) {
+        addVowel: function() {
             const vowels = ['a', 'e', 'i', 'o', 'u']
             this.addToLetters( vowels[Math.floor(Math.random() * vowels.length)] )
         },
@@ -84,6 +85,7 @@ export default {
                 }
             }
             this.setAnswer(this.attempt)
+            this.setLetters(this.letters)
         }
     }
 }
