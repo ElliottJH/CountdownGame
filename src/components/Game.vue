@@ -1,42 +1,38 @@
 <template>
     <section id="game" v-bind:class="[clockRunning === false ? 'stopped' :'']">
-        <div v-if="!gameEnded">
-            <Clock :setClockRunning="setClockRunning" v-bind:clockRunning="clockRunning" v-bind:endGame="endGame"/>
-            <Letters :setClockRunning="setClockRunning" :setAnswer="setAnswer" :setLetters="setLetters" v-bind:clockRunning="clockRunning"/>
-        </div>
-        <div v-if="gameEnded">
-            <Results v-bind:restartGame="restartGame" v-bind:answer="answer" v-bind:letters="letters" />
-        </div>
+        <Clock :setClockRunning="setClockRunning" 
+            v-bind:clockRunning="clockRunning" 
+            v-bind:setGameState="setGameState"/>
+        <Letters :setClockRunning="setClockRunning" 
+            :setAnswer="setAnswer" 
+            :setLetters="setLetters" 
+            v-bind:clockRunning="clockRunning"/>
     </section>
 </template>
 
 <script>
 import Clock from './Clock.vue'
 import Letters from './Letters.vue'
-import Results from './Results.vue'
 
 export default {
     name: 'Game',
     data: () => ({
-        clockRunning: undefined,
-        answer: undefined,
-        letters: undefined, 
-        gameEnded: undefined
+        clockRunning: undefined
     }),
+    props: {
+        answer: String,
+        letters: Array, 
+        setLetters: Function,
+        setAnswer: Function,
+        setGameState: Function
+    },
     components: ({
         Clock,
-        Letters,
-        Results
+        Letters
     }),
     methods: {
         setClockRunning: function (running) {
             this.clockRunning = running
-        },
-        setAnswer: function (answer){
-            this.answer = answer
-        },
-        setLetters: function (letters){
-            this.letters = letters
         },
         endGame: function (){
             this.gameEnded = true

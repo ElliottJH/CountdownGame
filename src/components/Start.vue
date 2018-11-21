@@ -16,30 +16,7 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 3em;
-  margin: .25em 0;
-}
-button {
-  border: none;
-  border-radius: 25px;
-  padding: 15px 50px;
-  cursor: pointer;
-  color: white;
-  font-size: 1.25em;
-  font-weight: lighter;
-  background-color: #3498db;
-  box-shadow: 0 5px 20px rgba(0,0,0,.1), 0 5px 35px rgba(0,0,0,.3);
-  transition: box-shadow .3s ease-in-out;
-  outline: none;
-  margin-bottom:50px;
-}
 h2 {
-  color: gray;
   margin-bottom:2em;
-  font-size: 1.3em
-}
-button:hover {
-  box-shadow: 0 5px 20px rgba(0,0,0,.05), 0 5px 35px rgba(0,0,0,.05);
 }
 </style>
