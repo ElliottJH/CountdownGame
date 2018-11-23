@@ -77,7 +77,8 @@ body, html{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-}#h1 {
+}
+h1 {
   font-size: 3em;
   margin: .25em 0;
 }

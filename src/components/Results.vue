@@ -14,7 +14,7 @@
                 disabled 
                 :key="n"
                 >
-            {{results[n-1].word}}: {{results[n-1].meaning}}
+            {{results[n-1].Word}}: {{results[n-1].Meaning[0]}}
             </p>    
         </div>
         <button @click="restartGame">Start a New Game</button>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'Results',
     props: {
@@ -30,27 +31,28 @@ export default {
         letters: Array,
     },
     data: () => ({
-        message: 'Your word: you words meaning.',
-        results: [
-                    {word:'word one',meaning:'this is the example meaning for word one '}, 
-                    {word:'word two',meaning:'this is the example meaning for word one '},
-                    {word:'word one',meaning:'this is the example meaning for word one '}, 
-                    {word:'word two',meaning:'this is the example meaning for word one '},
-                    {word:'word one',meaning:'this is the example meaning for word one '}, 
-                    {word:'word two',meaning:'this is the example meaning for word one '},
-                    {word:'word one',meaning:'this is the example meaning for word one '}, 
-                    {word:'word two',meaning:'this is the example meaning for word one '},
-                    {word:'word one',meaning:'this is the example meaning for word one '}, 
-                    {word:'word two',meaning:'this is the example meaning for word one this is the example meaning for word one this is the example meaning for word one '}
-                ]
+        message: '',
+        results: []
     }),
     methods: {
         getPossibleResults: function (){
-            //call method with new results
+            axios
+            .get('http://localhost:8080/words?meaning=true&limit=10&letters='+this.letters.join(''))
+            .then(response => {
+                this.results = response.data.Words
+                })
         },
         isAnswerCorrect: function(){
-            //calls to see if answer is correct
+            axios
+            .get('http://localhost:8080/definition?word='+this.answer)
+            .then(response => {
+                this.message = response.data.Word? response.data.Word + ": " + response.data.Meaning[0].toString() : this.answer + ": Is not a word."
+                })
         }
+    },
+    mounted(){
+        this.isAnswerCorrect()
+        this.getPossibleResults()
     }
 }
 </script>
