@@ -40,7 +40,7 @@ export default {
     data: () => ({
         lettersChosen: [],
         letters: [],
-        attempt: ""
+        attempt: undefined
     }),
     methods: {
         addConst: function() {
@@ -53,6 +53,7 @@ export default {
         },
         addToLetters: function(letter){
             const newLetters = this.letters.concat(letter)
+            this.attempt = ''
             if(newLetters.length === 8) {
                 this.letters = newLetters
                 this.setClockRunning(true)
@@ -85,6 +86,8 @@ export default {
                 }
             }
             this.setAnswer(this.attempt)
+        },
+        letters: function(){
             this.setLetters(this.letters)
         }
     }

@@ -18,7 +18,8 @@ export default {
     },
     data: () => ({
         seconds: 30,
-        milliseconds: 0
+        milliseconds: 0,
+        audio: new Audio(require('../countdownAudio.mp3'))
     }),
     methods: {
         numToDisplayString: function(time, length){
@@ -43,6 +44,8 @@ export default {
     watch: {
         clockRunning: function(){
             if (this.clockRunning) {
+                this.audio.volume = 0.5
+                this.audio.play()
                 this.increaseTime(new Date())
             }
         }
