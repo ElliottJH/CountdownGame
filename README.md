@@ -1,4 +1,4 @@
-# countdowngame
+# Countdown Game, implementing dictionary-api
 
 ## Project setup
 ```
