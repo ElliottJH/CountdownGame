@@ -40,16 +40,27 @@ export default {
     data: () => ({
         lettersChosen: [],
         letters: [],
-        attempt: undefined
+        attempt: undefined,
+        consts: 'bb'+'cc'+'dddd'+'ff'+'ggg'+'hh'+'j'+'k'+'llll'+'mm'+'nnnnnn'+'pp'+'q'+'rrrrrr'+'ssss'+'tttttt'+'vv'+'ww'+'x'+'yy'+'z',
+        vowels: 'aaaaaaaaa'+'eeeeeeeeeeee'+'iiiiiiiii'+'oooooooo'+'uuuu'
     }),
     methods: {
         addConst: function() {
-            const consts = ['q','w','r','t','y','p','s','d','f','g','h', 'j', 'k', 'l', 'z', 'x', 'v', 'b', 'n', 'm']
-            this.addToLetters( consts[Math.floor(Math.random() * consts.length)] )  
+            var index = this.generateRandomInt(0, this.consts.length)
+            var chosenConst = this.consts[index]
+            this.consts = this.consts.slice(0, index) + this.consts.slice(index+1)
+            this.addToLetters( chosenConst )
         },
         addVowel: function() {
-            const vowels = ['a', 'e', 'i', 'o', 'u']
-            this.addToLetters( vowels[Math.floor(Math.random() * vowels.length)] )
+            var index = this.generateRandomInt(0, this.vowels.length)
+            var chosenVowel = this.vowels[index]
+            this.vowels = this.vowels.slice(0, index) + this.vowels.slice(index+1)
+            this.addToLetters( chosenVowel )
+        },
+        generateRandomInt: function(min, max){
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
         },
         addToLetters: function(letter){
             const newLetters = this.letters.concat(letter)
