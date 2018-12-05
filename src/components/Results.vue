@@ -44,11 +44,15 @@ export default {
                 })
         },
         isAnswerCorrect: function(){
-            axios
-            .get('http://localhost:8080/definition?word='+this.answer)
-            .then(response => {
-                this.message = response.data.Word? response.data.Word + ": " + response.data.Meaning[0].toString() : this.answer + ": Is not a word."
-                })
+            if(this.answer != "" && this.answer != undefined){
+                axios
+                .get('http://localhost:8080/definition?word='+this.answer)
+                .then(response => {
+                    this.message = response.data.Word? response.data.Word + " : " + response.data.Meaning[0].toString() : this.answer + " : Is not a word"
+                    })
+            }else{
+                 this.message = "No attempt given"
+            }
         }
     },
     mounted(){
