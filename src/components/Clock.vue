@@ -19,7 +19,7 @@ export default {
     data: () => ({
         seconds: 30,
         milliseconds: 0,
-        audio: new Audio(require('../countdownAudio.mp3'))
+        audio: new Audio(require('../assets/countdownAudio.mp3'))
     }),
     methods: {
         numToDisplayString: function(time, length){

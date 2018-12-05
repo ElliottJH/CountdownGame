@@ -3,7 +3,7 @@
         <div>
             <input 
                 type="text" 
-                v-for="n in 8" 
+                v-for="n in 9" 
                 maxlength="1" 
                 disabled 
                 v-model="letters[n-1]" 
@@ -18,7 +18,7 @@
         <div>
             <input 
                 v-if="clockRunning" 
-                maxlength="8" 
+                maxlength="9" 
                 id="wordAttempt"
                 placeholder="enter your best answer" 
                 @keydown="keyDown"
@@ -29,6 +29,21 @@
 </template>
 
 <script>
+import letterWeight from "../assets/letterWeight.json"
+
+const getLetters = obj => {
+    let letters = []
+    Object.entries(obj).forEach(([key, value]) => {
+         letters = letters.concat(Array(value).fill(key))
+    })
+    return letters
+}
+
+const generateRandomInt = (min, max) => {
+    min = Math.ceil(min)
+    return Math.floor(Math.random() * (Math.floor(max) - min)) + min;
+}
+
 export default {
     name: 'Letters',
     props: {
@@ -41,51 +56,42 @@ export default {
         lettersChosen: [],
         letters: [],
         attempt: undefined,
-        consts: 'bb'+'cc'+'dddd'+'ff'+'ggg'+'hh'+'j'+'k'+'llll'+'mm'+'nnnnnn'+'pp'+'q'+'rrrrrr'+'ssss'+'tttttt'+'vv'+'ww'+'x'+'yy'+'z',
-        vowels: 'aaaaaaaaa'+'eeeeeeeeeeee'+'iiiiiiiii'+'oooooooo'+'uuuu'
+        consts: getLetters(letterWeight.consonant),
+        vowels: getLetters(letterWeight.vowels)
     }),
     methods: {
         addConst: function() {
-            var index = this.generateRandomInt(0, this.consts.length)
-            var chosenConst = this.consts[index]
-            this.consts = this.consts.slice(0, index) + this.consts.slice(index+1)
-            this.addToLetters( chosenConst )
+            this.addLetter(this.consts)
         },
         addVowel: function() {
-            var index = this.generateRandomInt(0, this.vowels.length)
-            var chosenVowel = this.vowels[index]
-            this.vowels = this.vowels.slice(0, index) + this.vowels.slice(index+1)
-            this.addToLetters( chosenVowel )
+            this.addLetter(this.vowels)
         },
-        generateRandomInt: function(min, max){
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min)) + min;
+        acceptLetter: function(char){
+            return (this.attempt.match(new RegExp(char, 'g')) || []).length >= (this.letters.toString().match(new RegExp(char, 'g')) || []).length
         },
-        addToLetters: function(letter){
-            const newLetters = this.letters.concat(letter)
-            this.attempt = ''
-            if(newLetters.length === 8) {
-                this.letters = newLetters
+        addLetter: function(arr){
+            if(this.letters.length === 9)
+                return
+            const index = generateRandomInt(0, arr.length)
+            const letter = arr[index]
+            arr.splice(index, 1)
+            this.letters = this.letters.concat(letter)
+            if(this.letters.length === 9) {
+                this.attempt = ''
                 this.setClockRunning(true)
-            }else if(newLetters.length < 8 ){
-                this.letters = newLetters
             }
         },
         keyDown: function(event){
             if(event.key.length !== 1)
                 return
 
-            if( this.acceptLetter(event.key) )
-                event.preventDefault();
-        },
-        acceptLetter: function(char){
-            return (this.attempt.match(new RegExp(char, 'g')) || []).length >= (this.letters.toString().match(new RegExp(char, 'g')) || []).length
+            if(this.acceptLetter(event.key))
+                event.preventDefault()
         }
     },
     watch: {
         attempt: function(){
-            let remainingLetters = this.letters.concat()
+            let remainingLetters = this.letters.slice(0)
             this.lettersChosen = []
                 
             for(let i = 0; i <= remainingLetters.length; i++){
@@ -106,7 +112,6 @@ export default {
 </script>
 
 <style scoped>
-
 input{
     width:3em;
     height:3em;
