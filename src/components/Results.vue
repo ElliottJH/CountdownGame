@@ -8,14 +8,17 @@
         <div id="possibleResults">
             <h2>Top 10 words</h2>
             <div 
-                type="text" 
+                type="text"
+                class="result" 
                 v-for="n in results.length" 
                 maxlength="1" 
                 disabled 
                 :key="n"
                 >
                 <p>{{results[n-1].Word}}: </p>
-                <p>{{results[n-1].Meaning.toString()}}</p>
+                <div class="meanings">
+                    <p v-for="meaning in results[n-1].Meaning" :key="meaning">{{ meaning }}</p>
+                </div>
             </div>
         </div>
         <button @click="restartGame">Start a New Game</button>
@@ -75,13 +78,13 @@ section{
     width:100%;
     padding-bottom: 0.5em;
 }
-#possibleResults div{
+.result div{
     margin:5px;
 }
-#possibleResults div p{
+.result p{
     display: inline;
 }
-#possibleResults div p:first-child{
+.result>p:first-child{
     font-weight: bold;
 }
 

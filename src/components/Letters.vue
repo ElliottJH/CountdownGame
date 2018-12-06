@@ -56,12 +56,12 @@ export default {
         lettersChosen: [],
         letters: [],
         attempt: undefined,
-        consts: getLetters(letterWeight.consonant),
+        consonant: getLetters(letterWeight.consonant),
         vowels: getLetters(letterWeight.vowels)
     }),
     methods: {
         addConst: function() {
-            this.addLetter(this.consts)
+            this.addLetter(this.consonant)
         },
         addVowel: function() {
             this.addLetter(this.vowels)
