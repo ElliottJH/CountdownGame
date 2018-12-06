@@ -6,7 +6,7 @@
                 v-for="n in 9" 
                 maxlength="1" 
                 disabled 
-                v-model="letters[n-1]" 
+                v-bind:value="letters[n-1] ? letters[n-1].toUpperCase() : ''" 
                 :key="n"
                 v-bind:class="[lettersChosen[n-1] === true ? 'used' : '']"
                 />

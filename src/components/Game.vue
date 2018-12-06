@@ -49,7 +49,7 @@ export default {
 
 <style scoped>
 #game {
-    background-color:#44bd32
+    background-color:#518BCE
 }
 h1 {
     font-size: 3em;
