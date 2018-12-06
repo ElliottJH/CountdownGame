@@ -89,6 +89,7 @@ section button{
 }
 #answer p{
     flex-basis: auto;
+    align-self: center;
 }
 #possibleResults{
     width: 100%;
@@ -108,6 +109,12 @@ section button{
 }
 .result p{
   background: #74b9ff;
+}
+.result:nth-child(odd) p{
+  background: #74b9ff;
+}
+.result:nth-child(even) p{
+  background: #82ccdd;
 }
 #answer p{
     display: inline-block;
