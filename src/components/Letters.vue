@@ -118,6 +118,7 @@ input{
     padding: 0.5em;
     margin:0.5em;
     text-align: center;
+    font-weight: bold;
     font-family: 'Open Sans', sans-serif;
     font-size: 1em;
     border-radius: 5px;

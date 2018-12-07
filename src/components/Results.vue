@@ -54,7 +54,7 @@ export default {
                 .then(response => {
                     this.message[0] = this.answer
                     this.message[1] = response.data.Word? response.data.Meaning[0].toString() : "You have entered an incorrect word"
-                    this.message[2] = this.answer.length + " Points"
+                    this.message[2] = (response.data.Word? response.data.Word.length : 0) + " Points"
                     })
             }
         }
